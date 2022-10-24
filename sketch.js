@@ -3,6 +3,7 @@ let numBeats = 12;
 let dir = 0;
 let nScl = 0.1;
 let nAmp = 5;
+let Word = ["I","M", "A","G","I","N","A","R","Y", "P", "R","A","C","T","I","C","E","S"]
 //
 function setup() {
   createCanvas(windowWidth, windowHeight/2);
@@ -10,6 +11,7 @@ function setup() {
   background(228, 21, 65);
   textSize(width/100);
   textAlign(CENTER, CENTER);
+  numBeats = Word.length;
 }
 let rot = 0;
 function draw() {
@@ -22,11 +24,11 @@ function draw() {
     dimension=height;
   }
   let x = dimension/(numBeats*4);
-  radius = x*10; //+ sin + (frameCount*0.5);
+  radius = x*20; //+ sin + (frameCount*0.5);
   
   translate(width/2, height/2);
   let mDist = dist(mouseX,mouseY, width/2, height/2);
-  mDist = constrain(mDist,0,width/3);
+  mDist = constrain(mDist,0,dimension/3);
   dir = map(mDist, 0, dimension/3, 3, 1);
   x/=constrain(dir,1,100);
 
@@ -39,11 +41,12 @@ function draw() {
     var n = noise(frameCount * nScl, i);
     //middle of canvas 
     rotate(rot);
-    noStroke();
     strokeWeight(2);
-    fill(255);
-    let ofset = sin(radians( (((rot + i)%numBeats)/numBeats)*360)) * numBeats;
+    stroke(255);
+    noFill();
+    let ofset = sin(radians( ((((rot + i)%numBeats))/numBeats)*180)) * numBeats;
     ellipse(ofset * x + dir * nAmp*n+ 50, radius/4, radius/4);
+    text(Word[i], ofset * x + dir * nAmp*n+ 50, radius/4,);
     pop();
   } 
   x++;
